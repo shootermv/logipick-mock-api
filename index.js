@@ -2,6 +2,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { readFile } from "node:fs/promises";
+import { group } from "node:console";
 
 let batch = JSON.parse(
   await readFile(new URL("./batch.json", import.meta.url), "utf8")
@@ -11,6 +12,10 @@ let items = JSON.parse(
 );
 let users = JSON.parse(
   await readFile(new URL("./users.json", import.meta.url), "utf8")
+);
+
+let filtersMetadata = JSON.parse(
+  await readFile(new URL("./filtersMetadata.json", import.meta.url), "utf8")
 );
 /*
 import batch from './batch.json' assert {type: 'json'}; 
@@ -35,7 +40,7 @@ fastify.get("/", (request, reply) => {
 fastify.post("/token", (request, reply) => {
   setTimeout(() => {
     reply.send({ token: "hello-world", is_admin: true });
-  }, 2000);
+  }, 200);
 });
 
 fastify.get("/batch", (request, reply) => {
@@ -58,11 +63,10 @@ fastify.post("/pick", (request, reply) => {
 //finish batch
 fastify.post("/batch", (request, reply) => {
   currentBatch = currentBatch + 1;
-
   reply.send({ success: true });
 });
 
-fastify.get("batch/progress", (request, reply) => {
+fastify.get("/batch/progress", (request, reply) => {
   reply.send({
     lines_done: 0,
     lines: 52,
@@ -101,6 +105,31 @@ fastify.delete("/user", (request, reply) => {
   users = users.filter((u) => u.user_id !== request.query.user_id);
   reply.send({ success: true });
 });
+
+fastify.get("/filter/metadata", async (request, reply) => {
+  reply.send(filtersMetadata);
+});
+
+fastify.get("/filter", async (request, reply) => {
+  reply.send({
+    group_id: [
+      {
+        value: "2",
+        text: "שכונות ירושליים יום ג",
+      },
+    ],
+    delivery_date: ["2024-05-21", "2024-05-22"],
+  });
+});
+
+fastify.post("/filter", async (request, reply) => {
+  setTimeout(() => {
+    reply.send({
+      success: true,
+    });
+  }, 1000);
+});
+
 // Run the server!
 fastify.listen({ port: 4000, host: "0.0.0.0" }, (err, address) => {
   if (err) throw err;

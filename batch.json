@@ -1,55 +1,60 @@
 {
-    "batch": {
-        "batch_num": "0",
-        "orders_count": 6,
-        "items_count": 2
-    },
-    "items": [
+  "commission_info": {
+    "lines_done": 0,
+    "line_commission": 0.2,
+    "worker_commission": 0.0
+  },
+  "batch": {
+    "batch_num": "0",
+    "orders_count": 6,
+    "items_count": 2
+  },
+  "items": [
+    {
+      "item": {
+        "item_id": "2460",
+        "item_name": "זוג גופיות ציצית לילדים - מידה 6",
+        "size": "0-3",
+        "Itur": 165,
+        "units": 2
+      },
+      "orders": [
         {
-            "item": {
-                "item_id": "2460",
-                "item_name": "זוג גופיות ציצית לילדים - מידה 6",
-                "size": "0-3",
-                "Itur": 165,
-                "units": 2
-            },
-            "orders": [
-                {
-                    "order_id": "17035153",
-                    "item_id": "2460",
-                    "units": 12,
-                    "picked_units": 0
-                },
-                {
-                    "order_id": "17035154",
-                    "item_id": "2461",
-                    "units": 5,
-                    "picked_units": 0
-                }
-            ]
+          "order_id": "17035153",
+          "item_id": "2460",
+          "units": 12,
+          "picked_units": 0
         },
         {
-            "item": {
-                "item_id": "8093",
-                "item_name": "זוג גרביון 80 דנייר אטום שחור - מידה xxl",
-                "size": "0-3",
-                "Itur": 165,
-                "units": 2
-            },
-            "orders": [
-                {
-                    "order_id": "17035156",
-                    "item_id": "8292",
-                    "units": 1,
-                    "picked_units": 0
-                },
-                {
-                    "order_id": "17035157",
-                    "item_id": "8293",
-                    "units": 4,
-                    "picked_units": 0
-                }
-            ]
+          "order_id": "17035154",
+          "item_id": "2461",
+          "units": 5,
+          "picked_units": 0
         }
-    ]
+      ]
+    },
+    {
+      "item": {
+        "item_id": "8093",
+        "item_name": "זוג גרביון 80 דנייר אטום שחור - מידה xxl",
+        "size": "0-3",
+        "Itur": 165,
+        "units": 2
+      },
+      "orders": [
+        {
+          "order_id": "17035156",
+          "item_id": "8292",
+          "units": 1,
+          "picked_units": 0
+        },
+        {
+          "order_id": "17035157",
+          "item_id": "8293",
+          "units": 4,
+          "picked_units": 0
+        }
+      ]
+    }
+  ]
 }
