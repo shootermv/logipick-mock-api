@@ -1,22 +1,22 @@
 [
-    {
-        "user_id": "israel",
-        "is_admin": true,
-        "line_commisssion": 0.2
-    },
-    {
-        "user_id": "moshe",
-        "is_admin": true,
-        "line_commisssion": 0.2
-    },
-    {
-        "user_id": "yossi",
-        "is_admin": false,
-        "line_commisssion": 0.2
-    },
-    {
-        "user_id": "yuli",
-        "is_admin": true,
-        "line_commisssion": 0.3
-    }
+  {
+    "user_id": "israel",
+    "is_admin": true,
+    "line_commission": 0.2
+  },
+  {
+    "user_id": "moshe",
+    "is_admin": true,
+    "line_commission": 0.2
+  },
+  {
+    "user_id": "yossi",
+    "is_admin": false,
+    "line_commission": 0.2
+  },
+  {
+    "user_id": "yuli",
+    "is_admin": true,
+    "line_commission": 0.3
+  }
 ]

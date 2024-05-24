@@ -75,8 +75,10 @@ fastify.get("/batch/progress", (request, reply) => {
 });
 
 //items
-fastify.get("/items", async (request, reply) => {
-  reply.send(items);
+fastify.get("/items", (request, reply) => {
+  setTimeout(() => {
+    reply.send(items);
+  }, 1000);
 });
 
 fastify.get("/items/outofstock", async (request, reply) => {
@@ -89,8 +91,10 @@ fastify.get("/items/outofstock", async (request, reply) => {
 });
 
 //get users
-fastify.get("/users", async (request, reply) => {
-  reply.send(users);
+fastify.get("/users", (request, reply) => {
+  setTimeout(() => {
+    reply.send(users);
+  }, 1000);
 });
 
 //create user
@@ -111,7 +115,7 @@ fastify.get("/filter/metadata", async (request, reply) => {
 });
 
 fastify.get("/filter", async (request, reply) => {
-  reply.send({
+  /*reply.send({
     group_id: [
       {
         value: "2",
@@ -119,10 +123,14 @@ fastify.get("/filter", async (request, reply) => {
       },
     ],
     delivery_date: ["2024-05-21", "2024-05-22"],
+  });*/
+  reply.send({
+    group_id: "2,3",
+    delivery_date: "2024-05-21,2024-05-22",
   });
 });
 
-fastify.post("/filter", async (request, reply) => {
+fastify.post("/filter", (request, reply) => {
   setTimeout(() => {
     reply.send({
       success: true,
