@@ -2,7 +2,6 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { readFile } from "node:fs/promises";
-import { group } from "node:console";
 
 let batch = JSON.parse(
   await readFile(new URL("./batch.json", import.meta.url), "utf8")
@@ -16,6 +15,10 @@ let users = JSON.parse(
 
 let filtersMetadata = JSON.parse(
   await readFile(new URL("./filtersMetadata.json", import.meta.url), "utf8")
+);
+
+let orders = JSON.parse(
+  await readFile(new URL("./orders.json", import.meta.url), "utf8")
 );
 /*
 import batch from './batch.json' assert {type: 'json'}; 
@@ -78,6 +81,12 @@ fastify.get("/batch/progress", (request, reply) => {
 fastify.get("/items", (request, reply) => {
   setTimeout(() => {
     reply.send(items);
+  }, 1000);
+});
+
+fastify.get("/orders", (request, reply) => {
+  setTimeout(() => {
+    reply.send(orders);
   }, 1000);
 });
 
