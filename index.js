@@ -33,7 +33,7 @@ const fastify = Fastify({
 
 await fastify.register(cors, {
   origin: "*", // or specify your desired origin
-  methods: ["GET", "PUT", "POST", "DELETE"],
+  methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
 });
 
 fastify.get("/", (request, reply) => {
@@ -53,10 +53,6 @@ fastify.get("/batch", (request, reply) => {
   } else {
     reply.status(500).send({ message: "no more batches" });
   }
-});
-
-fastify.patch("/batch/reset", (request, reply) => {
-  reply.send({ success: true });
 });
 
 fastify.post("/pick", (request, reply) => {
@@ -147,6 +143,14 @@ fastify.post("/filter", (request, reply) => {
   }, 1000);
 });
 
+//batch/reset
+fastify.patch("/batch/reset", (request, reply) => {
+  setTimeout(() => {
+    reply.send({
+      success: false,
+    });
+  }, 1000);
+});
 // Run the server!
 fastify.listen({ port: 4000, host: "0.0.0.0" }, (err, address) => {
   if (err) throw err;
