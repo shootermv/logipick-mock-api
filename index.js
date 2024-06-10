@@ -56,6 +56,18 @@ fastify.get("/batch", (request, reply) => {
 });
 
 fastify.post("/pick", (request, reply) => {
+  // console.log("BODY:", request.body);
+  const body = JSON.parse(request.body);
+
+  const { order_id, item_id, out_of_stock } = body;
+  const item = batch.items.find((it) => it.item.item_id === +item_id);
+  // console.log("ITEM:", item);
+  if (!item) {
+    reply.send({ success: true });
+    return;
+  }
+  const order = item.orders.find((or) => or.order_id === +order_id);
+  order.out_of_stock = out_of_stock;
   reply.send({ success: true });
 });
 

@@ -4,54 +4,66 @@
     "line_commission": 0.2,
     "worker_commission": 0.0
   },
+  "progress_info": {
+    "lines_done": 0,
+    "lines": 54,
+    "Progress": 0
+  },
+  "pace_info": {
+    "working_seconds": null,
+    "lines_picked": null,
+    "rate": null,
+    "others_working_seconds": null,
+    "others_lines_picked": 35,
+    "others_rate": null
+  },
   "batch": {
-    "batch_num": "0",
-    "orders_count": 6,
-    "items_count": 2
+    "batch_num": 3422,
+    "orders_count": 2,
+    "items_count": 2,
+    "pick_user": null,
+    "pick_status": null,
+    "pick_start": null
   },
   "items": [
     {
       "item": {
-        "item_id": "2460",
-        "item_name": "זוג גופיות ציצית לילדים - מידה 6",
-        "size": "0-3",
-        "Itur": 165,
-        "units": 2
+        "item_id": 1861,
+        "item_name": "גופיות V חצי שרוול מידה XL - שלישייה",
+        "Itur": 1861,
+        "units": 2,
+        "out_of_stock": false,
+        "image_url": null
       },
       "orders": [
         {
-          "order_id": "17035153",
-          "item_id": "2460",
-          "units": 12,
+          "order_id": 4,
+          "item_id": 1861,
+          "units": 1,
           "picked_units": 0
         },
         {
-          "order_id": "17035154",
-          "item_id": "2461",
-          "units": 5,
+          "order_id": 1,
+          "item_id": 1861,
+          "units": 1,
           "picked_units": 0
         }
       ]
     },
     {
       "item": {
-        "item_id": "8093",
-        "item_name": "זוג גרביון 80 דנייר אטום שחור - מידה xxl",
-        "size": "0-3",
-        "Itur": 165,
-        "units": 2
+        "item_id": 1922,
+        "item_name": "לבנים צבעוניות ילדות שמינייה מידה 2-4",
+        "Itur": 1922,
+        "units": 1,
+        "out_of_stock": false,
+        "image_url": "https://mishnatyosef.org/images/items/1922_167232192643660.jpg"
       },
       "orders": [
         {
-          "order_id": "17035156",
-          "item_id": "8292",
+          "order_id": 4,
+          "item_id": 1922,
           "units": 1,
-          "picked_units": 0
-        },
-        {
-          "order_id": "17035157",
-          "item_id": "8293",
-          "units": 4,
           "picked_units": 0
         }
       ]
