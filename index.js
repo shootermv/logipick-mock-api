@@ -47,27 +47,27 @@ fastify.post("/token", (request, reply) => {
 });
 
 fastify.get("/batch", (request, reply) => {
-  console.log("CURRENT BATCH:", currentBatch);
-  if (currentBatch < 1) {
-    reply.send(batch);
-  } else {
-    reply.status(500).send({ message: "no more batches" });
-  }
+  //console.log("CURRENT BATCH:", currentBatch);
+  //if (currentBatch < 1) {
+  reply.send(batch);
+  // } else {
+  //   reply.status(204).send({ message: "no more batches" });
+  // }
 });
 
 fastify.post("/pick", (request, reply) => {
-  // console.log("BODY:", request.body);
   const body = JSON.parse(request.body);
 
-  const { order_id, item_id, out_of_stock } = body;
+  const { order_id, item_id, out_of_stock, picked_units } = body;
   const item = batch.items.find((it) => it.item.item_id === +item_id);
-  // console.log("ITEM:", item);
+
   if (!item) {
     reply.send({ success: true });
     return;
   }
-  const order = item.orders.find((or) => or.order_id === +order_id);
-  order.out_of_stock = out_of_stock;
+  const orderToUpdate = item.orders.find((or) => or.order_id === +order_id);
+  orderToUpdate.out_of_stock = out_of_stock;
+  orderToUpdate.picked_units = picked_units;
   reply.send({ success: true });
 });
 
@@ -101,9 +101,9 @@ fastify.get("/orders", (request, reply) => {
 fastify.get("/items/outofstock", async (request, reply) => {
   const id = request.query.item_id;
   const out_of_stock = request.query.is_out_of_stock === "true";
-  console.log("out_of_stock:::", out_of_stock, id);
+  //console.log("out_of_stock:::", out_of_stock, id);
   items = items.map((i) => (i.item_id === +id ? { ...i, out_of_stock } : i));
-  console.log("KKK:", items[0]);
+  //console.log("KKK:", items[0]);
   reply.send(items);
 });
 
@@ -132,15 +132,6 @@ fastify.get("/filter/metadata", async (request, reply) => {
 });
 
 fastify.get("/filter", async (request, reply) => {
-  /*reply.send({
-    group_id: [
-      {
-        value: "2",
-        text: "שכונות ירושליים יום ג",
-      },
-    ],
-    delivery_date: ["2024-05-21", "2024-05-22"],
-  });*/
   reply.send({
     group_id: "2,3",
     delivery_date: "2024-05-21,2024-05-22",
