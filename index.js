@@ -41,18 +41,12 @@ fastify.get("/", (request, reply) => {
 });
 
 fastify.post("/token", (request, reply) => {
-  setTimeout(() => {
-    reply.send({ token: "hello-world", is_admin: true });
-  }, 200);
+  let user = users.find((u) => u.user_id === request.body.username);
+  reply.send({ token: "hello-world", is_admin: user?.is_admin || false });
 });
 
 fastify.get("/batch", (request, reply) => {
-  //console.log("CURRENT BATCH:", currentBatch);
-  //if (currentBatch < 1) {
   reply.send(batch);
-  // } else {
-  //   reply.status(204).send({ message: "no more batches" });
-  // }
 });
 
 fastify.post("/pick", (request, reply) => {
@@ -101,9 +95,9 @@ fastify.get("/orders", (request, reply) => {
 fastify.get("/items/outofstock", async (request, reply) => {
   const id = request.query.item_id;
   const out_of_stock = request.query.is_out_of_stock === "true";
-  //console.log("out_of_stock:::", out_of_stock, id);
+
   items = items.map((i) => (i.item_id === +id ? { ...i, out_of_stock } : i));
-  //console.log("KKK:", items[0]);
+
   reply.send(items);
 });
 
@@ -153,6 +147,14 @@ fastify.patch("/batch/reset", (request, reply) => {
       success: false,
     });
   }, 1000);
+});
+
+fastify.post("/sync", (request, replay) => {
+  replay.send({ success: true });
+});
+
+fastify.get("/batch/sticker", (request, replay) => {
+  replay.send({ success: true });
 });
 // Run the server!
 fastify.listen({ port: 4000, host: "0.0.0.0" }, (err, address) => {
