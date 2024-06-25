@@ -11,7 +11,7 @@
   },
   "pace_info": {
     "working_seconds": null,
-    "lines_picked": null,
+    "lines_picked": 100000,
     "rate": null,
     "others_working_seconds": null,
     "others_lines_picked": 35,

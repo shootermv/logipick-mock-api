@@ -127,8 +127,9 @@ fastify.get("/filter/metadata", async (request, reply) => {
 
 fastify.get("/filter", async (request, reply) => {
   reply.send({
-    group_id: "2,3",
-    delivery_date: "2024-05-21,2024-05-22",
+    group_id: "2",
+    delivery_date: "/Date(1716152400000)/",
+    update_date: "/Date(1715119216907)/",
   });
 });
 
@@ -156,8 +157,16 @@ fastify.post("/sync", (request, replay) => {
 fastify.get("/batch/sticker", (request, replay) => {
   replay.send({ success: true });
 });
-// Run the server!
-fastify.listen({ port: 4000, host: "0.0.0.0" }, (err, address) => {
-  if (err) throw err;
-  // Server is now listening on ${address}
+
+fastify.post("/optimize", (request, replay) => {
+  replay.send({ success: true });
 });
+
+// Run the server!
+fastify.listen(
+  { port: process.env.PORT || 4000, host: "0.0.0.0" },
+  (err, address) => {
+    if (err) throw err;
+    // Server is now listening on ${address}
+  }
+);
