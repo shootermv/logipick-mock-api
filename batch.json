@@ -12,7 +12,7 @@
   "pace_info": {
     "working_seconds": null,
     "lines_picked": 100000,
-    "rate": null,
+    "rate": 200,
     "others_working_seconds": null,
     "others_lines_picked": 35,
     "others_rate": null
@@ -54,7 +54,7 @@
       "item": {
         "item_id": 1922,
         "item_name": "לבנים צבעוניות ילדות שמינייה מידה 2-4",
-        "Itur": 1922,
+        "Itur": 222,
         "units": 1,
         "out_of_stock": false,
         "image_url": "https://mishnatyosef.org/images/items/1922_167232192643660.jpg"

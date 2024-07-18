@@ -6,6 +6,11 @@ import { readFile } from "node:fs/promises";
 let batch = JSON.parse(
   await readFile(new URL("./batch.json", import.meta.url), "utf8")
 );
+
+let batches = JSON.parse(
+  await readFile(new URL("./batches.json", import.meta.url), "utf8")
+);
+
 let items = JSON.parse(
   await readFile(new URL("./items.json", import.meta.url), "utf8")
 );
@@ -45,8 +50,35 @@ fastify.post("/token", (request, reply) => {
   reply.send({ token: "hello-world", is_admin: user?.is_admin || false });
 });
 
+function isBatchCompleted(batch) {
+  let completed = true;
+
+  batch.items.forEach((it) => {
+    it.orders.forEach((or) => {
+      if (or.units !== or.picked_units) {
+        completed = false;
+      }
+    });
+  });
+
+  return completed;
+}
+
 fastify.get("/batch", (request, reply) => {
-  reply.send(batch);
+  if (request.query.batchId === "3423") {
+    reply.status(204).send(null);
+    return;
+  }
+  //reply.send(batch);
+  reply.status(500).send({ success: false });
+});
+
+fastify.get("/batch/all", (request, reply) => {
+  setTimeout(() => {
+    reply.send({
+      batches,
+    });
+  }, 1000);
 });
 
 fastify.post("/pick", (request, reply) => {
@@ -63,6 +95,23 @@ fastify.post("/pick", (request, reply) => {
   orderToUpdate.out_of_stock = out_of_stock;
   orderToUpdate.picked_units = picked_units;
   reply.send({ success: true });
+});
+
+fastify.post("/pick/multi", (request, reply) => {
+  const ordersToModify = JSON.parse(request.body);
+
+  const [{ item_id }] = ordersToModify;
+  //console.log("ORDERS:", item_id);
+  const item = batch.items.find((it) => it.item.item_id === +item_id);
+
+  ordersToModify.forEach(({ order_id, picked_units }) => {
+    const orderToUpdate = item.orders.find((or) => or.order_id === +order_id);
+    orderToUpdate.out_of_stock = true;
+    orderToUpdate.picked_units = picked_units;
+  });
+
+  reply.send({ success: true });
+  //reply.status(500).send({ success: false });
 });
 
 //finish batch
@@ -143,9 +192,14 @@ fastify.post("/filter", (request, reply) => {
 
 //batch/reset
 fastify.patch("/batch/reset", (request, reply) => {
+  const batchId = request.query.batch_num;
+
+  const batchFound = batches.find((b) => b.batch_num === +batchId);
+  console.log("batchFound:", batchFound);
+  batchFound.pick_user = "";
   setTimeout(() => {
     reply.send({
-      success: false,
+      success: true,
     });
   }, 1000);
 });

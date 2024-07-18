@@ -1,0 +1,26 @@
+[
+  {
+    "batch_num": 19082,
+    "orders_count": 25,
+    "items_count": 48,
+    "pick_user": "itiel",
+    "pick_status": 2,
+    "pick_start": "/Date(1720958483427)/"
+  },
+  {
+    "batch_num": 19083,
+    "orders_count": 25,
+    "items_count": 28,
+    "pick_user": "203235718",
+    "pick_status": 1,
+    "pick_start": "/Date(1720962221747)/"
+  },
+  {
+    "batch_num": 19085,
+    "orders_count": 20,
+    "items_count": 34,
+    "pick_user": null,
+    "pick_status": null,
+    "pick_start": null
+  }
+]
