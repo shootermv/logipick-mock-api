@@ -18,6 +18,10 @@ let users = JSON.parse(
   await readFile(new URL("./users.json", import.meta.url), "utf8")
 );
 
+let filters = JSON.parse(
+  await readFile(new URL("./filters.json", import.meta.url), "utf8")
+);
+
 let filtersMetadata = JSON.parse(
   await readFile(new URL("./filtersMetadata.json", import.meta.url), "utf8")
 );
@@ -25,20 +29,17 @@ let filtersMetadata = JSON.parse(
 let orders = JSON.parse(
   await readFile(new URL("./orders.json", import.meta.url), "utf8")
 );
-/*
-import batch from './batch.json' assert {type: 'json'}; 
-import items from './items.json' assert {type: 'json'}; 
-import users from './users.json' assert {type: 'json'}; 
-*/
+
 let currentBatch = 0;
 
 const fastify = Fastify({
-  logger: true,
+  logger: false,
 });
 
 await fastify.register(cors, {
   origin: "*", // or specify your desired origin
   methods: ["GET", "PUT", "POST", "DELETE", "PATCH"],
+  exposedHeaders: ["X-Total-Rows"],
 });
 
 fastify.get("/", (request, reply) => {
@@ -69,8 +70,21 @@ fastify.get("/batch", (request, reply) => {
     reply.status(204).send(null);
     return;
   }
-  //reply.send(batch);
-  reply.status(500).send({ success: false });
+  reply.send(batch);
+  //reply.status(500).send({ success: false });
+});
+//finish batch
+fastify.post("/batch", (request, reply) => {
+  currentBatch = currentBatch + 1;
+  reply.send({ success: true });
+});
+
+fastify.get("/batch/progress", (request, reply) => {
+  reply.send({
+    lines_done: 0,
+    lines: 52,
+    Progress: 0,
+  });
 });
 
 fastify.get("/batch/all", (request, reply) => {
@@ -114,20 +128,6 @@ fastify.post("/pick/multi", (request, reply) => {
   //reply.status(500).send({ success: false });
 });
 
-//finish batch
-fastify.post("/batch", (request, reply) => {
-  currentBatch = currentBatch + 1;
-  reply.send({ success: true });
-});
-
-fastify.get("/batch/progress", (request, reply) => {
-  reply.send({
-    lines_done: 0,
-    lines: 52,
-    Progress: 0,
-  });
-});
-
 //items
 fastify.get("/items", (request, reply) => {
   setTimeout(() => {
@@ -136,9 +136,14 @@ fastify.get("/items", (request, reply) => {
 });
 
 fastify.get("/orders", (request, reply) => {
+  const size = +request.query.page_size;
+  const page = +request.query.page;
+  const startIdx = (page - 1) * size;
   setTimeout(() => {
-    reply.send(orders);
-  }, 1000);
+    reply
+      .header("X-Total-Rows", orders.length)
+      .send(orders.slice(startIdx, startIdx + size));
+  }, 100);
 });
 
 fastify.get("/items/outofstock", async (request, reply) => {
@@ -175,11 +180,7 @@ fastify.get("/filter/metadata", async (request, reply) => {
 });
 
 fastify.get("/filter", async (request, reply) => {
-  reply.send({
-    group_id: "2",
-    delivery_date: "/Date(1716152400000)/",
-    update_date: "/Date(1715119216907)/",
-  });
+  reply.send(filters);
 });
 
 fastify.post("/filter", (request, reply) => {
@@ -190,16 +191,16 @@ fastify.post("/filter", (request, reply) => {
   }, 1000);
 });
 
-//batch/reset
+//batch/reset batchID
 fastify.patch("/batch/reset", (request, reply) => {
   const batchId = request.query.batch_num;
 
   const batchFound = batches.find((b) => b.batch_num === +batchId);
-  console.log("batchFound:", batchFound);
+
   batchFound.pick_user = "";
   setTimeout(() => {
-    reply.send({
-      success: true,
+    reply.status(500).send({
+      success: false,
     });
   }, 1000);
 });

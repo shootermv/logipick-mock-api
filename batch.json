@@ -25,12 +25,26 @@
     "pick_status": null,
     "pick_start": null
   },
+  "orders": [
+    {
+      "order_id": 1,
+      "order_index": 1,
+      "picked_items": 0,
+      "items": 2
+    },
+    {
+      "order_id": 4,
+      "order_index": 2,
+      "picked_items": 0,
+      "items": 1
+    }
+  ],
   "items": [
     {
       "item": {
         "item_id": 1861,
         "item_name": "גופיות V חצי שרוול מידה XL - שלישייה",
-        "Itur": 1861,
+        "Itur": 0,
         "units": 2,
         "out_of_stock": false,
         "image_url": null
